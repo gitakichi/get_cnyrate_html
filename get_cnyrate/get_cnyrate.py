@@ -8,6 +8,11 @@ eur = []#empty list
 cny = []#empty list
 krw = []#empty list
 
+twd = []#empty list
+thb = []#empty list
+hkd = []#empty list
+sgd = []#empty list
+
 #exchangers
 html = requests.get("https://www.exchangers.co.jp/rate.php")
 soup = BeautifulSoup(html.content, "html.parser")
@@ -31,6 +36,26 @@ for detail in soup.find_all(class_="common-currency"):
     #print(ret[1].text)
     #print(ret[2].text)
 
+det = 0
+table = soup.find(class_="tbright")
+#print(table)
+for detail in table.find_all("tr"):
+    if det == 3:
+        ret = detail.find_all(class_="bdt")
+        twd.append(float(ret[2].text))
+        #print(float(ret[2].text))
+    if det == 4:
+        ret = detail.find_all(class_="bdt")
+        thb.append(float(ret[2].text))
+    if det == 5:
+        ret = detail.find_all(class_="bdt")
+        hkd.append(float(ret[2].text))
+    if det == 7:
+        ret = detail.find_all(class_="bdt")
+        sgd.append(float(ret[2].text))
+    det += 1
+
+
 
 #D-ranger
 html = requests.get("https://d-ranger.jp/shop/shinjuku/")
@@ -46,8 +71,16 @@ for detail in soup.find_all("tr"):
         if det == 2:#人民元は3番目
             #shop_b = float(detail.find(class_="cell-buy").text[:-1])
             cny.append(float(detail.find(class_="cell-buy").text[:-1]))
+        if det == 3:
+            twd.append(float(detail.find(class_="cell-buy").text[:-1]))
+        if det == 4:
+            hkd.append(float(detail.find(class_="cell-buy").text[:-1]))
         if det == 5:
             krw.append(float(detail.find(class_="cell-buy").text[:-1]))
+        if det == 9:
+            thb.append(float(detail.find(class_="cell-buy").text[:-1]))
+        if det == 10:
+            sgd.append(float(detail.find(class_="cell-buy").text[:-1]))
         det += 1
         #print(detail.find(class_="shoprate-name").text)
         #print(detail.find(class_="cell-buy").text)
@@ -72,6 +105,18 @@ for detail in soup.find_all(class_="subBox"):
     if det == 3:
         ret = detail.find(class_="rBox")
         krw.append(float(ret.find("dt").text))
+    if det == 4:
+        ret = detail.find(class_="rBox")
+        hkd.append(float(ret.find("dt").text))
+    if det == 5:
+        ret = detail.find(class_="rBox")
+        twd.append(float(ret.find("dt").text))
+    if det == 10:
+        ret = detail.find(class_="rBox")
+        sgd.append(float(ret.find("dt").text))
+    if det == 11:
+        ret = detail.find(class_="rBox")
+        thb.append(float(ret.find("dt").text))
     det += 1
     #print(detail.find("h3").text)
     #ret = detail.find(class_="rBox")
@@ -94,15 +139,31 @@ with open("index_FM.html",'r',encoding="utf-8") as f:
     fileText = fileText.replace('CNY[0]', "{:.2f}".format(cny[0]))
     fileText = fileText.replace('KRW[0]', "{:.4f}".format(krw[0]))
     
+    fileText = fileText.replace('TWD[0]', "{:.4f}".format(twd[0]))
+    fileText = fileText.replace('HKD[0]', "{:.2f}".format(hkd[0]))
+    fileText = fileText.replace('THB[0]', "{:.4f}".format(thb[0]))
+    fileText = fileText.replace('SGD[0]', "{:.2f}".format(sgd[0]))
+    
     fileText = fileText.replace('USD[1]', "{:.2f}".format(usd[1]))
     fileText = fileText.replace('EUR[1]', "{:.2f}".format(eur[1]))
     fileText = fileText.replace('CNY[1]', "{:.2f}".format(cny[1]))
     fileText = fileText.replace('KRW[1]', "{:.4f}".format(krw[1]))
+
+    fileText = fileText.replace('TWD[1]', "{:.4f}".format(twd[1]))
+    fileText = fileText.replace('HKD[1]', "{:.2f}".format(hkd[1]))
+    fileText = fileText.replace('THB[1]', "{:.4f}".format(thb[1]))
+    fileText = fileText.replace('SGD[1]', "{:.2f}".format(sgd[1]))
     
     fileText = fileText.replace('USD[2]', "{:.2f}".format(usd[2]))
     fileText = fileText.replace('EUR[2]', "{:.2f}".format(eur[2]))
     fileText = fileText.replace('CNY[2]', "{:.2f}".format(cny[2]))
     fileText = fileText.replace('KRW[2]', "{:.4f}".format(krw[2]))
+
+    fileText = fileText.replace('TWD[2]', "{:.4f}".format(twd[2]))
+    fileText = fileText.replace('HKD[2]', "{:.2f}".format(hkd[2]))
+    fileText = fileText.replace('THB[2]', "{:.4f}".format(thb[2]))
+    fileText = fileText.replace('SGD[2]', "{:.2f}".format(sgd[2]))
+
     #print(fileText)
     #f.close()#自動で閉じるから不要
     with open("index.html",'w',encoding="utf-8") as f:

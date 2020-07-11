@@ -6,7 +6,7 @@
 <body>
 </head>
 <h1>東京の激安両替店を探そう</h1><h3>日本円→外貨</h3>
- <table border="1" width="500" style="table-layout: fixed;">
+ <table border="1" width="500">
  <!td bgcolor="orange" style="text-align:center;">
     <tr>
       <td style="text-align:center;" widtd="25%">通貨</td>
