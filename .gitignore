@@ -6,4 +6,5 @@ ipch/
 *.sdf
 *.cachefile
 debug/
+index.html
 
