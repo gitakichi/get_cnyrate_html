@@ -6,5 +6,5 @@ ipch/
 *.sdf
 *.cachefile
 debug/
-index.html
+get_cnyrate/index.html
 
