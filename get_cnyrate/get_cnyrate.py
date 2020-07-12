@@ -1,6 +1,28 @@
 
 import requests
 from bs4 import BeautifulSoup
+import datetime
+
+def visa_rate(to_curr):
+    yyyymmdd = str(datetime.datetime.now())
+    yyyy = yyyymmdd[:4]
+    mm = yyyymmdd[5:7]
+    dd = yyyymmdd[8:10]
+
+    url0 ="https://usa.visa.com/support/consumer/travel-support/exchange-rate-calculator.html?amount=1&fee=2.0&utcConvertedDate=&exchangedate="
+    url_date = mm+"%2F"+dd+"%2F"+yyyy
+    url1 = "&fromCurr=JPY&toCurr="
+    url2 = to_curr#USD,EUR,CNY,THB,HKG,TWD,SGD,KRW
+    url3 = "&submitButton=Calculate+exchange+rate"
+
+    html = requests.get(url0 + url_date + url1 + url2 + url3)
+    soup = BeautifulSoup(html.content, "html.parser")
+
+    det = 0
+    for detail in soup.find_all(class_="converted-amount-value"):
+        if det == 0:
+            return float(detail.text[:6])
+        det += 1
 
 
 usd = []#empty list
@@ -123,50 +145,159 @@ for detail in soup.find_all(class_="subBox"):
     #print(ret.find("dt").text)
 
 
-#print("Compare CNY cny\nExchangers:%.2f\nD-ranger:%.2f\nInterbank:%.2f"%(cny[0],cny[1],cny[2]))
+usd.append(visa_rate("USD"))
+eur.append(visa_rate("EUR"))
+twd.append(visa_rate("TWD"))
+cny.append(visa_rate("CNY"))
+hkd.append(visa_rate("HKD"))
+krw.append(visa_rate("KRW"))
+thb.append(visa_rate("THB"))
+sgd.append(visa_rate("SGD"))
 
-
-import datetime
-datetime.datetime.now()
-
-#cny = [15.00,15.10,15.20]
 
 with open("index_FM.html",'r',encoding="utf-8") as f:
     fileText = f.read()
+    datetime.datetime.now()
     fileText = fileText.replace('datetime', str(datetime.datetime.now())[:16])
-    fileText = fileText.replace('USD[0]', "{:.2f}".format(usd[0]))
-    fileText = fileText.replace('EUR[0]', "{:.2f}".format(eur[0]))
-    fileText = fileText.replace('CNY[0]', "{:.2f}".format(cny[0]))
-    fileText = fileText.replace('KRW[0]', "{:.4f}".format(krw[0]))
-    
-    fileText = fileText.replace('TWD[0]', "{:.4f}".format(twd[0]))
-    fileText = fileText.replace('HKD[0]', "{:.2f}".format(hkd[0]))
-    fileText = fileText.replace('THB[0]', "{:.4f}".format(thb[0]))
-    fileText = fileText.replace('SGD[0]', "{:.2f}".format(sgd[0]))
-    
-    fileText = fileText.replace('USD[1]', "{:.2f}".format(usd[1]))
-    fileText = fileText.replace('EUR[1]', "{:.2f}".format(eur[1]))
-    fileText = fileText.replace('CNY[1]', "{:.2f}".format(cny[1]))
-    fileText = fileText.replace('KRW[1]', "{:.4f}".format(krw[1]))
+    if min(usd)==usd[0]:
+        fileText = fileText.replace('USD[0]', "<b>"+"{:.2f}".format(usd[0])+"</b>")
+    else:
+        fileText = fileText.replace('USD[0]', "{:.2f}".format(usd[0]))
+    if min(eur)==eur[0]:
+        fileText = fileText.replace('EUR[0]', "<b>"+"{:.2f}".format(eur[0])+"</b>")
+    else:
+        fileText = fileText.replace('EUR[0]', "{:.2f}".format(eur[0]))
+    if min(cny)==cny[0]:
+        fileText = fileText.replace('CNY[0]', "<b>"+"{:.2f}".format(cny[0])+"</b>")
+    else:
+        fileText = fileText.replace('CNY[0]', "{:.2f}".format(cny[0]))
+    if min(krw)==krw[0]:
+        fileText = fileText.replace('KRW[0]', "<b>"+"{:.4f}".format(krw[0])+"</b>")
+    else:
+        fileText = fileText.replace('KRW[0]', "{:.4f}".format(krw[0]))
+    if min(twd)==twd[0]:
+        fileText = fileText.replace('TWD[0]', "<b>"+"{:.4f}".format(twd[0])+"</b>")
+    else:
+        fileText = fileText.replace('TWD[0]', "{:.4f}".format(twd[0]))
+    if min(hkd)==hkd[0]:
+        fileText = fileText.replace('HKD[0]', "<b>"+"{:.2f}".format(hkd[0])+"</b>")
+    else:
+        fileText = fileText.replace('HKD[0]', "{:.2f}".format(hkd[0]))
+    if min(thb)==thb[0]:
+        fileText = fileText.replace('THB[0]', "<b>"+"{:.4f}".format(thb[0])+"</b>")
+    else:
+        fileText = fileText.replace('THB[0]', "{:.4f}".format(thb[0]))
+    if min(sgd)==sgd[0]:
+        fileText = fileText.replace('SGD[0]', "<b>"+"{:.2f}".format(sgd[0])+"</b>")
+    else:
+        fileText = fileText.replace('SGD[0]', "{:.2f}".format(sgd[0]))
 
-    fileText = fileText.replace('TWD[1]', "{:.4f}".format(twd[1]))
-    fileText = fileText.replace('HKD[1]', "{:.2f}".format(hkd[1]))
-    fileText = fileText.replace('THB[1]', "{:.4f}".format(thb[1]))
-    fileText = fileText.replace('SGD[1]', "{:.2f}".format(sgd[1]))
-    
-    fileText = fileText.replace('USD[2]', "{:.2f}".format(usd[2]))
-    fileText = fileText.replace('EUR[2]', "{:.2f}".format(eur[2]))
-    fileText = fileText.replace('CNY[2]', "{:.2f}".format(cny[2]))
-    fileText = fileText.replace('KRW[2]', "{:.4f}".format(krw[2]))
 
-    fileText = fileText.replace('TWD[2]', "{:.4f}".format(twd[2]))
-    fileText = fileText.replace('HKD[2]', "{:.2f}".format(hkd[2]))
-    fileText = fileText.replace('THB[2]', "{:.4f}".format(thb[2]))
-    fileText = fileText.replace('SGD[2]', "{:.2f}".format(sgd[2]))
+    if min(usd)==usd[1]:
+        fileText = fileText.replace('USD[1]', "<b>"+"{:.2f}".format(usd[1])+"</b>")
+    else:
+        fileText = fileText.replace('USD[1]', "{:.2f}".format(usd[1]))
+    if min(eur)==eur[1]:
+        fileText = fileText.replace('EUR[1]', "<b>"+"{:.2f}".format(eur[1])+"</b>")
+    else:
+        fileText = fileText.replace('EUR[1]', "{:.2f}".format(eur[1]))
+    if min(cny)==cny[1]:
+        fileText = fileText.replace('CNY[1]', "<b>"+"{:.2f}".format(cny[1])+"</b>")
+    else:
+        fileText = fileText.replace('CNY[1]', "{:.2f}".format(cny[1]))
+    if min(krw)==krw[1]:
+        fileText = fileText.replace('KRW[1]', "<b>"+"{:.4f}".format(krw[1])+"</b>")
+    else:
+        fileText = fileText.replace('KRW[1]', "{:.4f}".format(krw[1]))
+    if min(twd)==twd[1]:
+        fileText = fileText.replace('TWD[1]', "<b>"+"{:.4f}".format(twd[1])+"</b>")
+    else:
+        fileText = fileText.replace('TWD[1]', "{:.4f}".format(twd[1]))
+    if min(hkd)==hkd[1]:
+        fileText = fileText.replace('HKD[1]', "<b>"+"{:.2f}".format(hkd[1])+"</b>")
+    else:
+        fileText = fileText.replace('HKD[1]', "{:.2f}".format(hkd[1]))
+    if min(thb)==thb[1]:
+        fileText = fileText.replace('THB[1]', "<b>"+"{:.4f}".format(thb[1])+"</b>")
+    else:
+        fileText = fileText.replace('THB[1]', "{:.4f}".format(thb[1]))
+    if min(sgd)==sgd[1]:
+        fileText = fileText.replace('SGD[1]', "<b>"+"{:.2f}".format(sgd[1])+"</b>")
+    else:
+        fileText = fileText.replace('SGD[1]', "{:.2f}".format(sgd[1]))
 
-    #print(fileText)
-    #f.close()#自動で閉じるから不要
-    with open("index.html",'w',encoding="utf-8") as f:
-        f.write(fileText)
-        #f.close()
-    
+
+    if min(usd)==usd[2]:
+        fileText = fileText.replace('USD[2]', "<b>"+"{:.2f}".format(usd[2])+"</b>")
+    else:
+        fileText = fileText.replace('USD[2]', "{:.2f}".format(usd[2]))
+    if min(eur)==eur[2]:
+        fileText = fileText.replace('EUR[2]', "<b>"+"{:.2f}".format(eur[2])+"</b>")
+    else:
+        fileText = fileText.replace('EUR[2]', "{:.2f}".format(eur[2]))
+    if min(cny)==cny[2]:
+        fileText = fileText.replace('CNY[2]', "<b>"+"{:.2f}".format(cny[2])+"</b>")
+    else:
+        fileText = fileText.replace('CNY[2]', "{:.2f}".format(cny[2]))
+    if min(krw)==krw[2]:
+        fileText = fileText.replace('KRW[2]', "<b>"+"{:.4f}".format(krw[2])+"</b>")
+    else:
+        fileText = fileText.replace('KRW[2]', "{:.4f}".format(krw[2]))
+    if min(twd)==twd[2]:
+        fileText = fileText.replace('TWD[2]', "<b>"+"{:.4f}".format(twd[2])+"</b>")
+    else:
+        fileText = fileText.replace('TWD[2]', "{:.4f}".format(twd[2]))
+    if min(hkd)==hkd[2]:
+        fileText = fileText.replace('HKD[2]', "<b>"+"{:.2f}".format(hkd[2])+"</b>")
+    else:
+        fileText = fileText.replace('HKD[2]', "{:.2f}".format(hkd[2]))
+    if min(thb)==thb[2]:
+        fileText = fileText.replace('THB[2]', "<b>"+"{:.4f}".format(thb[2])+"</b>")
+    else:
+        fileText = fileText.replace('THB[2]', "{:.4f}".format(thb[2]))
+    if min(sgd)==sgd[2]:
+        fileText = fileText.replace('SGD[2]', "<b>"+"{:.2f}".format(sgd[2])+"</b>")
+    else:
+        fileText = fileText.replace('SGD[2]', "{:.2f}".format(sgd[2]))
+
+
+    if min(usd)==usd[3]:
+        fileText = fileText.replace('USD[3]', "<b>"+"{:.2f}".format(usd[3])+"</b>")
+    else:
+        fileText = fileText.replace('USD[3]', "{:.2f}".format(usd[3]))
+    if min(eur)==eur[3]:
+        fileText = fileText.replace('EUR[3]', "<b>"+"{:.2f}".format(eur[3])+"</b>")
+    else:
+        fileText = fileText.replace('EUR[3]', "{:.2f}".format(eur[3]))
+    if min(cny)==cny[3]:
+        fileText = fileText.replace('CNY[3]', "<b>"+"{:.2f}".format(cny[3])+"</b>")
+    else:
+        fileText = fileText.replace('CNY[3]', "{:.2f}".format(cny[3]))
+    if min(krw)==krw[3]:
+        fileText = fileText.replace('KRW[3]', "<b>"+"{:.4f}".format(krw[3])+"</b>")
+    else:
+        fileText = fileText.replace('KRW[3]', "{:.4f}".format(krw[3]))
+    if min(twd)==twd[3]:
+        fileText = fileText.replace('TWD[3]', "<b>"+"{:.4f}".format(twd[3])+"</b>")
+    else:
+        fileText = fileText.replace('TWD[3]', "{:.4f}".format(twd[3]))
+    if min(hkd)==hkd[3]:
+        fileText = fileText.replace('HKD[3]', "<b>"+"{:.2f}".format(hkd[3])+"</b>")
+    else:
+        fileText = fileText.replace('HKD[3]', "{:.2f}".format(hkd[3]))
+    if min(thb)==thb[3]:
+        fileText = fileText.replace('THB[3]', "<b>"+"{:.4f}".format(thb[3])+"</b>")
+    else:
+        fileText = fileText.replace('THB[3]', "{:.4f}".format(thb[3]))
+    if min(sgd)==sgd[3]:
+        fileText = fileText.replace('SGD[3]', "<b>"+"{:.2f}".format(sgd[3])+"</b>")
+    else:
+        fileText = fileText.replace('SGD[3]', "{:.2f}".format(sgd[3]))
+
+
+#print(fileText)
+#f.close()#自動で閉じるから不要
+with open("index.html",'w',encoding="utf-8") as f:
+    f.write(fileText)
+    #f.close()
+   
