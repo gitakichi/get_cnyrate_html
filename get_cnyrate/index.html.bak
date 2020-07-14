@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>東京の激安両替店を探そう</title>
+<meta http-equiv="content-type" charset="utf-8">
+<body>
+</head>
+<h1>東京の激安両替店を探そう</h1><div class="twitter">
+<a href="//twitter.com/share" class="twitter-share-button" data-text="東京の激安両替店を探そう" data-url="http://gitakichi.client.jp/" data-lang="ja<!-- 日本語の場合 -->">
+ Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h3>日本円→外貨</h3>
+ <table border="1" width="800" style="table-layout: fixed;">
+ <tr bgcolor="lightgray">
+      <td style="text-align:center;" widtd="25%">通貨</td>
+      <td style="text-align:center;" widtd="25%">Exchangers</td>
+      <td style="text-align:center;" widtd="25%">D-ranger</td>
+      <td style="text-align:center;" widtd="25%">Interbank</td>
+      <td style="text-align:center;" widtd="25%">AccessTicket</td>
+      <td style="text-align:center;" widtd="25%">Visa<br>(手数料2%)</td>
+      <td style="text-align:center;" widtd="25%">1万円から<br>両替した時</td>
+    </tr>
+    <tr>
+      <td style="text-align:center;">USD</td>
+      <td style="text-align:center;">107.30</td>
+      <td style="text-align:center;"><b>106.71</b></td>
+      <td style="text-align:center;">107.28</td>
+      <td rowspan="8" style="text-align:center;">不明<br><small>新宿西口では<br>ドルレンジャーに隣接し、<br>レートは互角。</small></td>
+      <td style="text-align:center;">109.42</td> 
+      <td style="text-align:center;">93.7</td> 
+    </tr>
+    <tr bgcolor="lightgray">
+      <td style="text-align:center;">EUR</td>
+      <td style="text-align:center;">121.89</td>
+      <td style="text-align:center;">121.79</td>
+      <td style="text-align:center;"><b>121.28</b></td>
+      <td style="text-align:center;">123.49</td>
+      <td style="text-align:center;">82.5</td> 
+    </tr>
+    <tr>
+      <td style="text-align:center;">TWD</td>
+      <td style="text-align:center;"><b>3.6270</b></td>
+      <td style="text-align:center;">3.6750</td>
+      <td style="text-align:center;">3.6400</td>
+      <td style="text-align:center;">3.7157</td>
+      <td style="text-align:center;">2757.1</td> 
+    </tr>
+    <tr bgcolor="lightgray">
+      <td style="text-align:center;">CNY</td>
+      <td style="text-align:center;">15.28</td>
+      <td style="text-align:center;"><b>15.06</b></td>
+      <td style="text-align:center;">15.25</td>
+      <td style="text-align:center;">15.62</td>
+      <td style="text-align:center;">664.0</td> 
+    </tr>
+    <tr>
+      <td style="text-align:center;">HKD</td>
+      <td style="text-align:center;">13.80</td>
+      <td style="text-align:center;"><b>13.79</b></td>
+      <td style="text-align:center;">13.84</td>
+      <td style="text-align:center;">14.12</td>
+      <td style="text-align:center;">725.2</td> 
+    </tr>
+    <tr bgcolor="lightgray">
+      <td style="text-align:center;">KRW</td>
+      <td style="text-align:center;">0.0900</td>
+      <td style="text-align:center;">0.0900</td>
+      <td style="text-align:center;"><b>0.0894</b></td>
+      <td style="text-align:center;">0.0915</td>
+      <td style="text-align:center;">111856.8</td> 
+    </tr>
+    <tr>
+      <td style="text-align:center;">THB</td>
+      <td style="text-align:center;"><b>3.4260</b></td>
+      <td style="text-align:center;">3.5110</td>
+      <td style="text-align:center;">3.4400</td>
+      <td style="text-align:center;">3.5049</td>
+      <td style="text-align:center;">2918.9</td> 
+    </tr>
+    <tr bgcolor="lightgray">
+      <td style="text-align:center;">SGD</td>
+      <td style="text-align:center;">76.87</td>
+      <td style="text-align:center;"><b>76.86</b></td>
+      <td style="text-align:center;">76.98</td>
+      <td style="text-align:center;">78.75</td>
+      <td style="text-align:center;">130.1</td> 
+    </tr>
+   
+  </table>
+  最終更新日時：2020-07-13 00:50
+<p><small>正確なレートはご自身でお確かめください。<br>本サイトはPythonとBeautiful Soupによるスクレイピングで取得した情報を利用しています。</p>
+</body>
+ <footer>
+ <p><a href="https://twitter.com/gita_kichi">©Gitakichi<a></p>
+  </footer>
+</html>

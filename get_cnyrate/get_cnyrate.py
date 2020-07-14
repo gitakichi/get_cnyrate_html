@@ -2,6 +2,8 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 def visa_rate(to_curr):
     yyyymmdd = str(datetime.datetime.now())
@@ -44,14 +46,14 @@ for detail in soup.find_all(class_="common-currency"):
     if det == 0:
         ret = detail.find_all(class_="bdt")
         usd.append(float(ret[2].text))
-    if det == 1:
+    elif det == 1:
         ret = detail.find_all(class_="bdt")
         eur.append(float(ret[2].text))
-    if det == 2:#人民元は3番目
+    elif det == 2:#人民元は3番目
         ret = detail.find_all(class_="bdt")
         #shop_a = float(ret[2].text)
         cny.append(float(ret[2].text))
-    if det == 3:
+    elif det == 3:
         ret = detail.find_all(class_="bdt")
         krw.append(float(ret[2].text))
     det += 1
@@ -66,13 +68,13 @@ for detail in table.find_all("tr"):
         ret = detail.find_all(class_="bdt")
         twd.append(float(ret[2].text))
         #print(float(ret[2].text))
-    if det == 4:
+    elif det == 4:
         ret = detail.find_all(class_="bdt")
         thb.append(float(ret[2].text))
-    if det == 5:
+    elif det == 5:
         ret = detail.find_all(class_="bdt")
         hkd.append(float(ret[2].text))
-    if det == 7:
+    elif det == 7:
         ret = detail.find_all(class_="bdt")
         sgd.append(float(ret[2].text))
     det += 1
@@ -88,20 +90,20 @@ for detail in soup.find_all("tr"):
     if detail.find(scope="row"):
         if det == 0:
             usd.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 1:
+        elif det == 1:
             eur.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 2:#人民元は3番目
+        elif det == 2:#人民元は3番目
             #shop_b = float(detail.find(class_="cell-buy").text[:-1])
             cny.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 3:
+        elif det == 3:
             twd.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 4:
+        elif det == 4:
             hkd.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 5:
+        elif det == 5:
             krw.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 9:
+        elif det == 9:
             thb.append(float(detail.find(class_="cell-buy").text[:-1]))
-        if det == 10:
+        elif det == 10:
             sgd.append(float(detail.find(class_="cell-buy").text[:-1]))
         det += 1
         #print(detail.find(class_="shoprate-name").text)
@@ -117,26 +119,26 @@ for detail in soup.find_all(class_="subBox"):
     if det == 0:
         ret = detail.find(class_="rBox")
         usd.append(float(ret.find("dt").text))
-    if det == 1:
+    elif det == 1:
         ret = detail.find(class_="rBox")
         eur.append(float(ret.find("dt").text))
-    if det == 2:#人民元は3番目
+    elif det == 2:#人民元は3番目
         ret = detail.find(class_="rBox")
         #shop_c = float(ret.find("dt").text)
         cny.append(float(ret.find("dt").text))
-    if det == 3:
+    elif det == 3:
         ret = detail.find(class_="rBox")
         krw.append(float(ret.find("dt").text))
-    if det == 4:
+    elif det == 4:
         ret = detail.find(class_="rBox")
         hkd.append(float(ret.find("dt").text))
-    if det == 5:
+    elif det == 5:
         ret = detail.find(class_="rBox")
         twd.append(float(ret.find("dt").text))
-    if det == 10:
+    elif det == 10:
         ret = detail.find(class_="rBox")
         sgd.append(float(ret.find("dt").text))
-    if det == 11:
+    elif det == 11:
         ret = detail.find(class_="rBox")
         thb.append(float(ret.find("dt").text))
     det += 1
@@ -153,6 +155,33 @@ hkd.append(visa_rate("HKD"))
 krw.append(visa_rate("KRW"))
 thb.append(visa_rate("THB"))
 sgd.append(visa_rate("SGD"))
+
+
+#SonyBank
+driver = webdriver.Edge(executable_path="C:/Users/ryots/Downloads/edgedriver_win64/msedgedriver.exe")#任意の場所に配置したexeのパス
+driver.get("https://moneykit.net/visitor/sb_rate/")
+soup = BeautifulSoup(driver.page_source, "html.parser")
+
+det = 0
+for detail in soup.find_all("strong"):
+    if det == 1:
+        usd.append(float(detail.text))
+        #print(detail.text)
+    elif det == 3:
+        eur.append(float(detail.text))
+        #print(detail.text)
+    elif det == 15:
+        hkd.append(float(detail.text))
+        #print(detail.text)
+    det += 1
+
+twd.append(float(999))
+cny.append(float(999))
+krw.append(float(999))
+thb.append(float(999))
+sgd.append(float(999))
+
+driver.close()
 
 
 with open("index_FM.html",'r',encoding="utf-8") as f:
@@ -294,6 +323,43 @@ with open("index_FM.html",'r',encoding="utf-8") as f:
     else:
         fileText = fileText.replace('SGD[3]', "{:.2f}".format(sgd[3]))
 
+    
+    if min(usd)==usd[4]:
+        fileText = fileText.replace('USD[4]', "<b>"+"{:.2f}".format(usd[4])+"</b>")
+    else:
+        fileText = fileText.replace('USD[4]', "{:.2f}".format(usd[4]))
+    if min(eur)==eur[4]:
+        fileText = fileText.replace('EUR[4]', "<b>"+"{:.2f}".format(eur[4])+"</b>")
+    else:
+        fileText = fileText.replace('EUR[4]', "{:.2f}".format(eur[4]))
+    fileText = fileText.replace('CNY[4]', "-")
+    fileText = fileText.replace('KRW[4]', "-")
+    fileText = fileText.replace('TWD[4]', "-")
+    if min(hkd)==hkd[4]:
+        fileText = fileText.replace('HKD[4]', "<b>"+"{:.2f}".format(hkd[4])+"</b>")
+    else:
+        fileText = fileText.replace('HKD[4]', "{:.2f}".format(hkd[4]))
+    fileText = fileText.replace('THB[4]', "-")
+    fileText = fileText.replace('SGD[4]', "-")
+    
+
+    usd_need = 10000 / min(usd)
+    eur_need = 10000 / min(eur)
+    cny_need = 10000 / min(cny)
+    krw_need = 10000 / min(krw)
+    twd_need = 10000 / min(twd)
+    hkd_need = 10000 / min(hkd)
+    thb_need = 10000 / min(thb)
+    sgd_need = 10000 / min(sgd)
+    
+    fileText = fileText.replace('USD_NEED', "{:.1f}".format(usd_need))
+    fileText = fileText.replace('EUR_NEED', "{:.1f}".format(eur_need))
+    fileText = fileText.replace('CNY_NEED', "{:.1f}".format(cny_need))
+    fileText = fileText.replace('KRW_NEED', "{:.1f}".format(krw_need))
+    fileText = fileText.replace('TWD_NEED', "{:.1f}".format(twd_need))
+    fileText = fileText.replace('HKD_NEED', "{:.1f}".format(hkd_need))
+    fileText = fileText.replace('THB_NEED', "{:.1f}".format(thb_need))
+    fileText = fileText.replace('SGD_NEED', "{:.1f}".format(sgd_need))
 
 #print(fileText)
 #f.close()#自動で閉じるから不要
