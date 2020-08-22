@@ -2,8 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import datetime
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from msedge.selenium_tools import Edge, EdgeOptions
 
 def visa_rate(to_curr):
     yyyymmdd = str(datetime.datetime.now())
@@ -158,7 +157,13 @@ sgd.append(visa_rate("SGD"))
 
 
 #SonyBank
-driver = webdriver.Edge(executable_path="C:/Users/ryots/Downloads/edgedriver_win64/msedgedriver.exe")#任意の場所に配置したexeのパス
+
+options = EdgeOptions()
+options.use_chromium = True
+options.add_argument("headless")
+options.add_argument("disable-gpu")
+driver = Edge(executable_path="C:/Users/ryots/Downloads/edgedriver_win64/msedgedriver.exe",options = options)#任意の場所に配置したexeのパス
+
 driver.get("https://moneykit.net/visitor/sb_rate/")
 soup = BeautifulSoup(driver.page_source, "html.parser")
 
@@ -184,7 +189,7 @@ sgd.append(float(999))
 driver.close()
 
 
-with open("index_FM.html",'r',encoding="utf-8") as f:
+with open("C:/Users/ryots/Documents/GitHub/get_cnyrate_html/get_cnyrate/index_FM.html",'r',encoding="utf-8") as f:
     fileText = f.read()
     datetime.datetime.now()
     fileText = fileText.replace('datetime', str(datetime.datetime.now())[:16])
@@ -363,7 +368,7 @@ with open("index_FM.html",'r',encoding="utf-8") as f:
 
 #print(fileText)
 #f.close()#自動で閉じるから不要
-with open("index.html",'w',encoding="utf-8") as f:
+with open("C:/Users/ryots/Documents/GitHub/get_cnyrate_html/get_cnyrate/index.html",'w',encoding="utf-8") as f:
     f.write(fileText)
     #f.close()
    
